@@ -19,6 +19,7 @@ endif
 LOCAL_SHARED_LIBRARIES := \
     libutils \
     libcutils \
+    liblog \
     libgps.utils \
     libdl
 
