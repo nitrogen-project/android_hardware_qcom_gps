@@ -8,7 +8,6 @@ include $(CLEAR_VARS)
 
 ## Libs
 LOCAL_SHARED_LIBRARIES := \
-    libsensor \
     libutils \
     libcutils \
     liblog
@@ -24,9 +23,7 @@ LOCAL_SRC_FILES += \
     LocTimer.cpp \
     LocThread.cpp \
     MsgTask.cpp \
-    loc_misc_utils.cpp \
-    process_name.c \
-    sensor.cpp
+    loc_misc_utils.cpp
 
 # Flag -std=c++11 is not accepted by compiler when LOCAL_CLANG is set to true
 LOCAL_CFLAGS += \
@@ -41,8 +38,7 @@ LOCAL_LDFLAGS += -Wl,--export-dynamic
 
 ## Includes
 LOCAL_C_INCLUDES:= \
-    $(LOCAL_PATH)/platform_lib_abstractions \
-    framework/native/libs/sensor/include
+    $(LOCAL_PATH)/platform_lib_abstractions
 
 LOCAL_COPY_HEADERS_TO:= gps.utils/
 LOCAL_COPY_HEADERS:= \
@@ -62,6 +58,16 @@ LOCAL_COPY_HEADERS:= \
    platform_lib_abstractions/platform_lib_time.h \
    platform_lib_abstractions/platform_lib_macros.h \
    loc_misc_utils.h
+
+ifeq ($(TARGET_USE_LEGACY_SUPPORT),true)
+LOCAL_SHARED_LIBRARIES += \
+    libsensor
+LOCAL_SRC_FILES += \
+    process_name.c \
+    sensor.cpp
+LOCAL_C_INCLUDES += \
+    framework/native/libs/sensor/include
+endif
 
 LOCAL_MODULE := libgps.utils
 
